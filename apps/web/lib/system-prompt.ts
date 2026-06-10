@@ -3,6 +3,7 @@
 // (mental health, household, fertility, eldercare, etc.).
 
 import { brand } from "./brand";
+import { skillsPromptBlock } from "./skills";
 
 const DEFAULT_PROMPT = `You are the assistant for ${brand.name} — a chat-first family operating system used by households in ${brand.city}.
 
@@ -35,7 +36,7 @@ export function buildSystemPrompt(opts: {
   familyName?: string;
 } = {}) {
   const base = process.env.SYSTEM_PROMPT_OVERRIDE || DEFAULT_PROMPT;
-  const parts: string[] = [base];
+  const parts: string[] = [base, skillsPromptBlock()];
 
   if (opts.userName && opts.userName !== "friend") {
     parts.push(
