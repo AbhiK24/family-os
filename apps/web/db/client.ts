@@ -2,10 +2,13 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
 
-const url = process.env.DATABASE_URL;
+// Connection-string resolution.
+//   - DATABASE_URL          → Railway, Render, Fly, self-hosted Postgres
+//   - POSTGRES_URL          → Vercel Postgres (Neon-backed), Supabase
+const url = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
 if (!url) {
   console.warn(
-    "[db] DATABASE_URL is not set — queries will fail. See .env.example."
+    "[db] No DATABASE_URL or POSTGRES_URL set — queries will fail. See .env.example."
   );
 }
 

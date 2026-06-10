@@ -7,10 +7,23 @@ import { fileURLToPath } from "node:url";
 
 config({ path: ".env.local" });
 
-const url = process.env.DATABASE_URL_MIGRATIONS ?? process.env.DATABASE_URL;
+// Migration URL resolution. DDL can't run through a pooler, so prefer the
+// non-pooling URL when available.
+//   - DATABASE_URL_MIGRATIONS  → explicit override
+//   - POSTGRES_URL_NON_POOLING → Vercel Postgres direct connection
+//   - DATABASE_URL             → Railway / generic
+//   - POSTGRES_URL             → fallback
+const url =
+  process.env.DATABASE_URL_MIGRATIONS ??
+  process.env.POSTGRES_URL_NON_POOLING ??
+  process.env.DATABASE_URL ??
+  process.env.POSTGRES_URL;
+
 if (!url) {
-  console.error("Set DATABASE_URL_MIGRATIONS or DATABASE_URL");
-  process.exit(1);
+  console.warn(
+    "[migrate] No DATABASE_URL / POSTGRES_URL set — skipping (build can continue)."
+  );
+  process.exit(0);
 }
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

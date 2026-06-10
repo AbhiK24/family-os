@@ -5,6 +5,12 @@
 
 A chat-first operating system for the household — clone, drop in your keys for WhatsApp / LLM / voice / vision, rebrand, and ship. Built so you can stand up a "house manager" product for your city in a weekend, not a year.
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAbhiK24%2Ffamily-os&project-name=family-os&repository-name=family-os&stores=%5B%7B%22type%22%3A%22postgres%22%7D%5D&env=LLM_API_KEY%2CLLM_BASE_URL%2CLLM_MODEL%2CBRAND_NAME%2CBRAND_TAGLINE&envDescription=See%20.env.example%20for%20the%20full%20list&envLink=https%3A%2F%2Fgithub.com%2FAbhiK24%2Ffamily-os%2Fblob%2Fmain%2Fapps%2Fweb%2F.env.example)
+
+The Vercel button provisions a Postgres database, prompts you for the minimum keys (LLM key + base URL + model + brand text), and runs migrations on first build. You're live in ~3 minutes.
+
+Prefer the local-dev path:
+
 ```
 git clone https://github.com/AbhiK24/family-os
 cd family-os
